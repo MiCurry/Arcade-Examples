@@ -1,7 +1,19 @@
 from typing import Optional, Tuple
 
 import arcade
-from arcade.camera import OrthographicProjectionData
+
+""" A simple example that demonstrates using multiple cameras to allow a split 
+screen using Arcade's 3.0 camera.
+
+The left screen follows the player, while the right screen is stationary. The 
+code is written in a way that it could easily be extended to two players, or
+to more than two players.
+
+WARNING: This example currently uses a development build of arcade 3.0.0.dev26.
+At this time the new camera code is still in development, so this example might
+be out of date with later 3.0.0 versions of arcade. I'll try and update it, but
+I make no guarantees.
+"""
 
 TITLE = "Split Screen Test"
 SCREEN_WIDTH = 1400
@@ -167,26 +179,22 @@ class Game(arcade.Window):
             player.setup()
 
     def setup_players_cameras(self):
-        half_height = self.screen_height / 2
-        half_width = self.screen_width / 2
+        half_width = self.screen_width // 2
 
-        self.player_one_viewport = (0, 0, half_width, self.screen_height)  # left, bottom, width, height
-        self.player_one_projection_data = OrthographicProjectionData(-half_width / 2.0, half_width / 2.0,
-                                                                     # Left, right
-                                                                     -half_height, half_height,  # Up, down
-                                                                     0.0, 100.0,  # Near, far
-                                                                     self.player_one_viewport)  # Viewport
+        # Viewport is defined as: (left, bottom, width, height)
+        self.player_one_viewport = (0, 0, half_width, self.screen_height)
+        self.player_two_viewport = (half_width, 0, half_width, self.screen_height)
 
-        self.player_two_viewport = (half_width, 0, half_width, self.screen_height)  # left, bottom, width, height
-        self.player_two_projection_data = OrthographicProjectionData(-half_width / 2.0, half_width / 2.0, # Left, right
-                                                                     -half_height, half_height,  # Up, down
-                                                                     0.0, 100.0,  # Near, far
-                                                                     self.player_two_viewport)  # Viewport
+        player_one_camera = arcade.camera.Camera2D()
+        player_one_camera.viewport = self.player_one_viewport
+        player_one_camera.equalise()
 
-        self.cameras.append(arcade.camera.Camera2D(projection_data=self.player_one_projection_data,
-                                                   window=self))
-        self.cameras.append(arcade.camera.Camera2D(projection_data=self.player_two_projection_data,
-                                                   window=self))
+        player_two_camera = arcade.camera.Camera2D()
+        player_two_camera.viewport = self.player_two_viewport
+        player_two_camera.equalise()
+
+        self.cameras.append(player_one_camera)
+        self.cameras.append(player_two_camera)
 
         self.center_camera_on_player(PLAYER_ONE)
 

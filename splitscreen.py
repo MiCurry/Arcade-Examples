@@ -76,6 +76,8 @@ class Player(arcade.Sprite):
     def setup(self):
         self.body = self.main.physics_engine.get_physics_object(self).body
         self.shape = self.main.physics_engine.get_physics_object(self).shape
+        self.controller = arcade.get_controllers()[0]
+        self.controller.open()
 
     def apply_angle_damping(self):
         self.body.angular_velocity /= 1.05
@@ -86,6 +88,8 @@ class Player(arcade.Sprite):
         self.dx = self.a_pressed + self.d_pressed
         self.dy = self.w_pressed + self.s_pressed
         self.applied_rotational_vel = self.left_pressed - self.right_pressed
+        
+        print(self.controller.lefty)
 
         if self.applied_rotational_vel == 0.0:
             self.apply_angle_damping()

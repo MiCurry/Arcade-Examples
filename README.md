@@ -50,3 +50,9 @@ Numpad 8 - Change the direction of the vector in the positive y direction
 Numpad 2 - Change the direction of the vector in the negative y direction
 Numpad 7 - Change the direction of the vector in the negative z direction
 Numpad 9 - Change the direction to the vector in the positive z direction
+
+# Building Examples 
+
+Examples showing how to build nuitka or pyinstaller bundlers with custom
+resource handlers. Install either nuitkak or pyinstaller and run away!
+

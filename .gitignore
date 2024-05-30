@@ -1,0 +1,9 @@
+*.spec
+*.pyc
+*.png
+*.exe
+
+building_examples/build/
+building_examples/dist/
+
+.idea

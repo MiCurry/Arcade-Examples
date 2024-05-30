@@ -116,4 +116,6 @@ ax[1].set_title('Projected - Zoom = 1')
 ax[0].bar(x, norm_dist)
 ax[1].bar(x, dist)
 
-plt.savefig("projected_0_to_10_1_step.png")
+fig.tight_layout()
+
+plt.savefig(f"projected_{start}_to_{stop}_{step}_step.png")
